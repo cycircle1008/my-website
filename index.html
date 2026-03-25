@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>广州抑郁症检查信息网 - 专业医疗资源指南</title>
+    <meta name="description" content="广州地区抑郁症检查医院信息，提供专业医院搜索、地区筛选、简易自测问卷等服务">
+    <meta name="keywords" content="广州抑郁症,心理健康,医院搜索,自测问卷,精神科">
+    
+    <!-- DaisyUI + Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@latest/dist/full.css" rel="stylesheet">
+    
+    <!-- 自定义样式 -->
+    <link rel="stylesheet" href="css/style.css">
+    
+    <!-- 图标库 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-base-100 min-h-screen">
+    <!-- 导航栏 -->
+    <header class="navbar bg-primary text-primary-content shadow-lg sticky top-0 z-50">
+        <div class="navbar-start">
+            <div class="dropdown lg:hidden">
+                <div tabindex="0" role="button" class="btn btn-ghost">
+                    <i class="fas fa-bars text-xl"></i>
+                </div>
+                <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52 text-base-content">
+                    <li><a href="#hospitals" class="nav-link">医院查询</a></li>
+                    <li><a href="#selftest" class="nav-link">自测问卷</a></li>
+                    <li><a href="#info" class="nav-link">检查指南</a></li>
+                    <li><a href="#faq" class="nav-link">常见问题</a></li>
+                </ul>
+            </div>
+            <a class="btn btn-ghost text-xl font-bold">
+                <i class="fas fa-heartbeat mr-2"></i>
+                广州抑郁症检查网
+            </a>
+        </div>
+        
+        <div class="navbar-center hidden lg:flex">
+            <ul class="menu menu-horizontal px-1">
+                <li><a href="#hospitals" class="nav-link">医院查询</a></li>
+                <li><a href="#selftest" class="nav-link">自测问卷</a></li>
+                <li><a href="#info" class="nav-link">检查指南</a></li>
+                <li><a href="#faq" class="nav-link">常见问题</a></li>
+            </ul>
+        </div>
+        
+        <div class="navbar-end">
+            <div class="form-control">
+                <input type="text" id="globalSearch" placeholder="搜索医院..." class="input input-bordered input-sm w-24 md:w-auto bg-white text-black">
+            </div>
+        </div>
+    </header>
+
+    <!-- 主要内容区域 -->
+    <main class="container mx-auto px-4 py-8">
+        <!-- 首页横幅 -->
+        <section class="hero bg-gradient-to-r from-blue-50 to-blue-100 rounded-lg mb-8 p-8">
+            <div class="hero-content text-center">
+                <div class="max-w-md">
+                    <h1 class="text-4xl font-bold text-primary mb-4">
+                        <i class="fas fa-stethoscope mr-3"></i>
+                        广州抑郁症检查指南
+                    </h1>
+                    <p class="text-lg text-gray-600 mb-6">
+                        专业医疗资源，科学检查流程，关爱心理健康
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                        <button class="btn btn-primary btn-lg" onclick="scrollToSection('hospitals')">
+                            <i class="fas fa-hospital mr-2"></i>
+                            查找医院
+                        </button>
+                        <button class="btn btn-outline btn-lg" onclick="scrollToSection('selftest')">
+                            <i class="fas fa-clipboard-check mr-2"></i>
+                            自测问卷
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 分类导航标签 -->
+        <div class="tabs tabs-boxed bg-white shadow-md mb-8 p-2">
+            <a class="tab tab-active" data-tab="hospitals">
+                <i class="fas fa-hospital mr-2"></i>
+                医院查询
+            </a>
+            <a class="tab" data-tab="selftest">
+                <i class="fas fa-clipboard-check mr-2"></i>
+                自测问卷
+            </a>
+            <a class="tab" data-tab="info">
+                <i class="fas fa-info-circle mr-2"></i>
+                检查指南
+            </a>
+            <a class="tab" data-tab="faq">
+                <i class="fas fa-question-circle mr-2"></i>
+                常见问题
+            </a>
+        </div>
+
+        <!-- 医院查询模块 -->
+        <section id="hospitals" class="tab-content active">
+            <div class="card bg-white shadow-lg">
+                <div class="card-body">
+                    <h2 class="card-title text-2xl mb-6">
+                        <i class="fas fa-search mr-2 text-primary"></i>
+                        医院搜索与筛选
+                    </h2>
+                    
+                    <!-- 搜索和筛选区域 -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                        <div class="form-control">
+                            <label class="label">
+                                <span class="label-text font-semibold">医院名称</span>
+                            </label>
+                            <input type="text" id="hospitalSearch" placeholder="输入医院名称..." class="input input-bordered">
+                        </div>
+                        
+                        <div class="form-control">
+                            <label class="label">
+                                <span class="label-text font-semibold">所在地区</span>
+                            </label>
+                            <select id="districtFilter" class="select select-bordered">
+                                <option value="">全部地区</option>
+                                <option value="荔湾区">荔湾区</option>
+                                <option value="越秀区">越秀区</option>
+                                <option value="天河区">天河区</option>
+                                <option value="白云区">白云区</option>
+                                <option value="海珠区">海珠区</option>
+                                <option value="番禺区">番禺区</option>
+                                <option value="黄埔区">黄埔区</option>
+                                <option value="花都区">花都区</option>
+                                <option value="南沙区">南沙区</option>
+                                <option value="从化区">从化区</option>
+                                <option value="增城区">增城区</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-control">
+                            <label class="label">
+                                <span class="label-text font-semibold">医院等级</span>
+                            </label>
+                            <select id="levelFilter" class="select select-bordered">
+                                <option value="">全部等级</option>
+                                <option value="三甲">三甲医院</option>
+                                <option value="二甲">二甲医院</option>
+                                <option value="专科">专科医院</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <!-- 医院列表 -->
+                    <div id="hospitalList" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <!-- 医院卡片将通过JavaScript动态生成 -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 自测问卷模块 -->
+        <section id="selftest" class="tab-content">
+            <div class="card bg-white shadow-lg">
+                <div class="card-body">
+                    <h2 class="card-title text-2xl mb-6">
+                        <i class="fas fa-clipboard-check mr-2 text-primary"></i>
+                        抑郁症简易自测问卷
+                    </h2>
+                    
+                    <div class="alert alert-info mb-6">
+                        <i class="fas fa-info-circle"></i>
+                        <div>
+                            <h3 class="font-bold">温馨提示</h3>
+                            <div class="text-sm">此问卷仅供参考，不能替代专业医生诊断。如有疑虑，请及时就医咨询。</div>
+                        </div>
+                    </div>
+                    
+                    <!-- 问卷进度 -->
+                    <div class="mb-6">
+                        <div class="flex justify-between text-sm mb-2">
+                            <span>答题进度</span>
+                            <span id="progressText">0/9</span>
+                        </div>
+                        <progress id="testProgress" class="progress progress-primary w-full" value="0" max="9"></progress>
+                    </div>
+                    
+                    <!-- 问卷题目 -->
+                    <div id="questionContainer">
+                        <!-- 问题将通过JavaScript动态生成 -->
+                    </div>
+                    
+                    <!-- 操作按钮 -->
+                    <div class="card-actions justify-between mt-6">
+                        <button id="prevBtn" class="btn btn-outline" disabled>
+                            <i class="fas fa-arrow-left mr-2"></i>
+                            上一题
+                        </button>
+                        <button id="nextBtn" class="btn btn-primary" disabled>
+                            下一题
+                            <i class="fas fa-arrow-right ml-2"></i>
+                        </button>
+                        <button id="submitBtn" class="btn btn-success hidden">
+                            <i class="fas fa-check mr-2"></i>
+                            查看结果
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 测试结果模态框 -->
+            <dialog id="resultModal" class="modal">
+                <div class="modal-box w-11/12 max-w-2xl">
+                    <h3 class="font-bold text-lg mb-4">测试结果</h3>
+                    <div id="resultContent">
+                        <!-- 结果内容将通过JavaScript生成 -->
+                    </div>
+                    <div class="modal-action">
+                        <button class="btn btn-primary" onclick="document.getElementById('resultModal').close()">确定</button>
+                        <button class="btn btn-outline" onclick="restartTest()">重新测试</button>
+                    </div>
+                </div>
+            </dialog>
+        </section>
+
+        <!-- 检查指南模块 -->
+        <section id="info" class="tab-content">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <!-- 检查流程 -->
+                <div class="card bg-white shadow-lg">
+                    <div class="card-body">
+                        <h2 class="card-title text-xl mb-4">
+                            <i class="fas fa-list-ol mr-2 text-primary"></i>
+                            检查流程
+                        </h2>
+                        <div class="steps steps-vertical">
+                            <div class="step step-primary">
+                                <div class="step-content">
+                                    <h3 class="font-semibold">初步评估与问诊</h3>
+                                    <p class="text-sm text-gray-600">医生详细询问症状、病史和生活状况</p>
+                                </div>
+                            </div>
+                            <div class="step step-primary">
+                                <div class="step-content">
+                                    <h3 class="font-semibold">心理测评</h3>
+                                    <p class="text-sm text-gray-600">使用专业量表评估抑郁程度</p>
+                                </div>
+                            </div>
+                            <div class="step step-primary">
+                                <div class="step-content">
+                                    <h3 class="font-semibold">身体检查</h3>
+                                    <p class="text-sm text-gray-600">排除躯体疾病，评估整体健康</p>
+                                </div>
+                            </div>
+                            <div class="step step-primary">
+                                <div class="step-content">
+                                    <h3 class="font-semibold">诊断与治疗</h3>
+                                    <p class="text-sm text-gray-600">制定个性化治疗方案</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 注意事项 -->
+                <div class="card bg-white shadow-lg">
+                    <div class="card-body">
+                        <h2 class="card-title text-xl mb-4">
+                            <i class="fas fa-exclamation-triangle mr-2 text-warning"></i>
+                            注意事项
+                        </h2>
+                        <div class="space-y-4">
+                            <div class="alert alert-warning">
+                                <i class="fas fa-clock"></i>
+                                <div>
+                                    <h4 class="font-semibold">检查前准备</h4>
+                                    <p class="text-sm">保证充足睡眠，携带既往病历资料</p>
+                                </div>
+                            </div>
+                            <div class="alert alert-info">
+                                <i class="fas fa-comments"></i>
+                                <div>
+                                    <h4 class="font-semibold">坦诚沟通</h4>
+                                    <p class="text-sm">如实描述症状，不隐瞒不夸大</p>
+                                </div>
+                            </div>
+                            <div class="alert alert-success">
+                                <i class="fas fa-users"></i>
+                                <div>
+                                    <h4 class="font-semibold">家属陪同</h4>
+                                    <p class="text-sm">建议家属陪同，便于补充信息</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 检查项目详情 -->
+            <div class="card bg-white shadow-lg mt-6">
+                <div class="card-body">
+                    <h2 class="card-title text-xl mb-4">
+                        <i class="fas fa-microscope mr-2 text-primary"></i>
+                        主要检查项目
+                    </h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <h3 class="font-semibold text-lg mb-3 text-primary">心理测评</h3>
+                            <ul class="space-y-2">
+                                <li class="flex items-center">
+                                    <i class="fas fa-check-circle text-success mr-2"></i>
+                                    抑郁自评量表（SDS）
+                                </li>
+                                <li class="flex items-center">
+                                    <i class="fas fa-check-circle text-success mr-2"></i>
+                                    汉密尔顿抑郁量表（HAMD）
+                                </li>
+                                <li class="flex items-center">
+                                    <i class="fas fa-check-circle text-success mr-2"></i>
+                                    贝克抑郁量表（BDI）
+                                </li>
+                                <li class="flex items-center">
+                                    <i class="fas fa-check-circle text-success mr-2"></i>
+                                    焦虑量表评估
+                                </li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold text-lg mb-3 text-primary">身体检查</h3>
+                            <ul class="space-y-2">
+                                <li class="flex items-center">
+                                    <i class="fas fa-check-circle text-success mr-2"></i>
+                                    血常规检查
+                                </li>
+                                <li class="flex items-center">
+                                    <i class="fas fa-check-circle text-success mr-2"></i>
+                                    甲状腺功能检测
+                                </li>
+                                <li class="flex items-center">
+                                    <i class="fas fa-check-circle text-success mr-2"></i>
+                                    肝肾功能评估
+                                </li>
+                                <li class="flex items-center">
+                                    <i class="fas fa-check-circle text-success mr-2"></i>
+                                    心电图检查
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 常见问题模块 -->
+        <section id="faq" class="tab-content">
+            <div class="card bg-white shadow-lg">
+                <div class="card-body">
+                    <h2 class="card-title text-2xl mb-6">
+                        <i class="fas fa-question-circle mr-2 text-primary"></i>
+                        常见问题解答
+                    </h2>
+                    
+                    <div class="join join-vertical w-full">
+                        <div class="collapse collapse-arrow join-item border border-base-300">
+                            <input type="radio" name="faq-accordion" checked="checked" />
+                            <div class="collapse-title text-lg font-medium">
+                                <i class="fas fa-question mr-2 text-primary"></i>
+                                什么情况下需要进行抑郁症检查？
+                            </div>
+                            <div class="collapse-content">
+                                <p class="text-gray-600">
+                                    当出现持续2周以上的情绪低落、兴趣减退、精力不足、睡眠问题、食欲改变等症状，
+                                    并且这些症状影响到正常的工作、学习或生活时，建议及时寻求专业医生的帮助进行检查。
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <div class="collapse collapse-arrow join-item border border-base-300">
+                            <input type="radio" name="faq-accordion" />
+                            <div class="collapse-title text-lg font-medium">
+                                <i class="fas fa-question mr-2 text-primary"></i>
+                                抑郁症检查费用大概是多少？
+                            </div>
+                            <div class="collapse-content">
+                                <p class="text-gray-600">
+                                    初步问诊和心理测评费用通常在100-300元之间，身体检查根据具体项目不同，
+                                    费用在500-2000元不等。大部分三甲医院都支持医保报销。
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <div class="collapse collapse-arrow join-item border border-base-300">
+                            <input type="radio" name="faq-accordion" />
+                            <div class="collapse-title text-lg font-medium">
+                                <i class="fas fa-question mr-2 text-primary"></i>
+                                检查过程会很痛苦吗？
+                            </div>
+                            <div class="collapse-content">
+                                <p class="text-gray-600">
+                                    抑郁症检查主要包括问诊和心理测评，不会有身体上的痛苦。
+                                    身体检查也都是常规项目，如抽血、心电图等，不会造成明显不适。
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <div class="collapse collapse-arrow join-item border border-base-300">
+                            <input type="radio" name="faq-accordion" />
+                            <div class="collapse-title text-lg font-medium">
+                                <i class="fas fa-question mr-2 text-primary"></i>
+                                如何选择合适的医院？
+                            </div>
+                            <div class="collapse-content">
+                                <p class="text-gray-600">
+                                    建议选择三甲医院的精神科或心理科，这些医院设备完善、医生经验丰富。
+                                    也可以选择专业的精神卫生中心，如广州医科大学附属脑科医院等。
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <div class="collapse collapse-arrow join-item border border-base-300">
+                            <input type="radio" name="faq-accordion" />
+                            <div class="collapse-title text-lg font-medium">
+                                <i class="fas fa-question mr-2 text-primary"></i>
+                                抑郁症可以治愈吗？
+                            </div>
+                            <div class="collapse-content">
+                                <p class="text-gray-600">
+                                    抑郁症是可以有效治疗的疾病。通过规范的药物治疗、心理治疗以及生活方式调整，
+                                    大多数患者都能够获得显著改善，重新回到正常的生活状态。
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- 页脚 -->
+    <footer class="footer footer-center p-10 bg-primary text-primary-content mt-16">
+        <aside>
+            <i class="fas fa-heartbeat text-4xl mb-4"></i>
+            <p class="font-bold text-lg">广州抑郁症检查信息网</p>
+            <p class="text-sm opacity-80">关爱心理健康，专业医疗指导</p>
+            <p class="text-xs opacity-60 mt-4">
+                本网站信息仅供参考，不能替代专业医生诊断<br>
+                如有疑虑，请及时就医咨询
+            </p>
+        </aside>
+        <nav>
+            <div class="grid grid-flow-col gap-4">
+                <p class="text-xs opacity-60">© 2024 广州抑郁症检查信息网. 保留所有权利.</p>
+            </div>
+        </nav>
+    </footer>
+
+    <!-- JavaScript -->
+    <script type="module" src="js/script.js"></script>
+</body>
+</html>
